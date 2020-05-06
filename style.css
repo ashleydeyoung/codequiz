@@ -12,6 +12,10 @@ body {
     background-color: pink;
 }
 
+article {
+    visibility: hidden;
+}
+
 #title {
     text-align: center;
 }

@@ -5,7 +5,7 @@ var mainEL = document.getElementById("main");
 var buttonArrayEl = document.getElementById("buttonArray");
 var quizEL = document.getElementById("quiz");
 var inputEL = document.createElement("input");
-// inputEl.setAttribute("class", "input");
+var formEL = document.getElementById("form");
 
 
 var counter = 25;
@@ -49,7 +49,7 @@ function startTimer() {
         if (counter > 0) {
         timerEL.textContent = counter;
         }
-        if (counter <= 0) {
+        if (counter <= 0 || questionCount === questionArray.length) {
         clearInterval(timeRemaining);
         endQuiz();
         
@@ -79,11 +79,11 @@ function startTimer() {
             if (questionCount === 0) {
                 submitEl.remove();
             }
-            if (questionCount === questionArray.length) {
+            // if (questionCount === questionArray.length) {
             
-                endQuiz();
+            //     endQuiz();
                 
-            }
+            // }
     
             mainEL.textContent = questionArray[questionCount].question;
             buttonArrayEl.textContent = "";
@@ -112,13 +112,15 @@ function startTimer() {
         mainEL.innerHTML = ("Your score: " + counter + " Please enter your initials below for high score");
         buttonArrayEl.style.display = "none";
         timerEL.textContent = "";
-        inputEL.testContent = " ";
-        
+        inputEL.textContent = " ";
         
         quizEL.appendChild(inputEL);
+        inputEL.setAttribute("type", "text")
+        inputEL.setAttribute("class", "form-control")
         var newSubmit = document.createElement("button");
         newSubmit.textContent = "SUBMIT";
-        newSubmit.setAttribute("href", "highscore.html")
+        newSubmit.setAttribute("onclick", "location.href = 'highscore.html';");
+        newSubmit.setAttribute("class", "btn btn-primary mb-2");
         quizEL.appendChild(newSubmit);
     }
 
