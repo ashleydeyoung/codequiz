@@ -1,153 +1,134 @@
 var submitEl = document.getElementById("submit");
 var timerEL = document.getElementById("timer");
-
-var mainEL = document.getElementById("main");
-
-var btnOne = document.createElement("BUTTON");
-btnOne.setAttribute("class", "button1"); 
-var btnTwo = document.createElement("BUTTON");
-btnTwo.setAttribute("class", "button2");
-var btnThree = document.createElement("BUTTON");
-btnThree.setAttribute("class", "button3");
-var btnFour = document.createElement("BUTTON");
-btnFour.setAttribute("class", "button4");
-
-
-
-
-
 var hTags = document.querySelector("h1");
+var mainEL = document.getElementById("main");
+var buttonArrayEl = document.getElementById("buttonArray");
+var quizEL = document.getElementById("quiz");
+var inputEL = document.createElement("input");
+// inputEl.setAttribute("class", "input");
 
 
-submitEl.addEventListener("click", function (event) {
-    event.preventDefault();
-    submitEl.remove();
-    hTags.textContent = " ";
-    questionOne();
+var counter = 25;
+
+var timeRemaining = 0;
+
+var questionCount = 0
+
+var questionArray = [
+    {
+        question: "Which of the following is a free floating bone?",
+        answers: ["Lunate", "Hyoid", "Cuboid", "Radius"],
+        correct: "Hyoid",
+    },
+    {
+        question: "Which mucle group is located in the leg?",
+        answers: ["Rhomboids", "Quadriceps", "Pectoralis Major", "Brachioradialis"],
+        correct: "Quadriceps",
+    },
+    {
+        question: "Which of the following is not a lobe in the brain?",
+        answers: ["Temporal", "Frontal", "Occipital", "Posterior"],
+        correct: "Posterior",
     
-    var counter = 15;
+    },
+    {
+        question: "Which of the following is a type of synovial joint?",
+        answers: ["ball-and-socket", "saddle", "blunt", "plane"],
+        correct: "blunt",
+    }
+];
 
-        setInterval(function() {
+
+function startTimer() {
+    
+    
+
+     var timeRemaining = setInterval(function() {
             
-           counter--;
-           if (counter >= 0) {
-              timerEL.textContent = counter;
-           }
-           if (counter === 0) {
-             clearInterval(counter);
-             
-           }
-        }, 1000);
-});
-
-    function questionOne() {
-    mainEL.innerHTML = "Which of the following is a free floating bone?";
-    btnOne.innerHTML = "Hyoid"; 
-    document.body.children[1].appendChild(btnOne);   
-    btnTwo.innerHTML = "Radius"; 
-    document.body.children[1].appendChild(btnTwo);  
-    btnThree.innerHTML = "Lunate";
-    document.body.children[1].appendChild(btnThree);
-    btnFour.innerHTML = "Cuboid";
-    document.body.children[1].appendChild(btnFour);
-
-
-    btnOne.addEventListener("click", function(eventOne) {
-        eventOne.preventDefault();
-        questionTwo();
-    });
-    btnTwo.addEventListener("click", function(eventOne) {
-        eventOne.preventDefault();
-        questionTwo();
-    });
-    btnThree.addEventListener("click", function(eventOne) {
-        eventOne.preventDefault();
-        questionTwo();
-    });
-    btnFour.addEventListener("click", function(eventOne) {
-        eventOne.preventDefault();
-        questionTwo();
-    });
-
-  
-    
+        counter--;
+        if (counter > 0) {
+        timerEL.textContent = counter;
+        }
+        if (counter <= 0) {
+        clearInterval(timeRemaining);
+        endQuiz();
+        
+        
+        }
+    }, 1000);
 }
 
+    function checkAnswer(event) {
+        
+        if (event.target.textContent === questionArray[questionCount].correct) {
+            // console.log("correct");
+            questionCount++;
+            counter += 5
+            
+        } 
+        else {
+            counter -= 10
+            questionCount++;
+        
+        }
+        changeQuestion();
+    };
 
-
-    function questionTwo() {
-        mainEL.innerHTML = "Which mucle group is located in the leg?";
-        btnOne.innerHTML = "Rhomoids";
-        btnTwo.innerHTML = "Quadriceps"; 
-        btnThree.innerHTML = "Pectoralis Major";
-        btnFour.innerHTML = "Brachioradialis";
-
-        btnOne.addEventListener("click", function(eventOne) {
-            eventOne.preventDefault();
-            questionThree();
-        });
-        btnTwo.addEventListener("click", function(eventOne) {
-            eventOne.preventDefault();
-            questionThree();
-        });
-        btnThree.addEventListener("click", function(eventOne) {
-            eventOne.preventDefault();
-            questionThree();
-        });
-        btnFour.addEventListener("click", function(eventOne) {
-            eventOne.preventDefault();
-            questionThree();
-        });
-    }   
+    function changeQuestion() {
+            
+            if (questionCount === 0) {
+                submitEl.remove();
+            }
+            if (questionCount === questionArray.length) {
+            
+                endQuiz();
+                
+            }
     
-
-
-    function questionThree() {
-        mainEL.innerHTML = "Which is not a type of synoival joint?";
-        btnOne.innerHTML = "synoball-and socket";
-        btnTwo.innerHTML = "saddle"; 
-        btnThree.innerHTML = "plane";
-        btnFour.innerHTML = "stuck";
-
-        btnOne.addEventListener("click", function(eventOne) {
-            eventOne.preventDefault();
-            questionFour();
-        });
-        btnTwo.addEventListener("click", function(eventOne) {
-            eventOne.preventDefault();
-            questionFour();
-        });
-        btnThree.addEventListener("click", function(eventOne) {
-            eventOne.preventDefault();
-            questionFour();
-        });
-        btnFour.addEventListener("click", function(eventOne) {
-            eventOne.preventDefault();
-            questionFour();
-        });
-    }   
-
-    function questionFour() {
-        mainEL.innerHTML = "Which is not a lobe in the brain?";
-        btnOne.innerHTML = "Posterior";
-        btnTwo.innerHTML = "Temporal"; 
-        btnThree.innerHTML = "Occipital";
-        btnFour.innerHTML = "Frontal";
-
-        btnOne.addEventListener("click", function(eventOne) {
-            eventOne.preventDefault();
+            mainEL.textContent = questionArray[questionCount].question;
+            buttonArrayEl.textContent = "";
+            for (let i = 0; i < questionArray[questionCount].answers.length; i++) {
+                var newButton = document.createElement("button");
+                newButton.textContent = questionArray[questionCount].answers[i];
+              
+                console.log(questionArray[questionCount].answers[i]);
+                buttonArrayEl.appendChild(newButton);
+                
+                newButton.addEventListener("click", checkAnswer);
             
-        });
-        btnTwo.addEventListener("click", function(eventOne) {
-            eventOne.preventDefault();
             
-        });
-        btnThree.addEventListener("click", function(eventOne) {
-            eventOne.preventDefault();
             
-        });
-        btnFour.addEventListener("click", function(eventOne) {
-            eventOne.preventDefault();
+
             
-        });
-    }   
+        }
+       
+    };
+
+  
+
+    function endQuiz() {
+        
+        hTags.textContent = "Quiz Over";
+        mainEL.innerHTML = ("Your score: " + counter + " Please enter your initials below for high score");
+        buttonArrayEl.style.display = "none";
+        timerEL.textContent = "";
+        inputEL.testContent = " ";
+        
+        
+        quizEL.appendChild(inputEL);
+        var newSubmit = document.createElement("button");
+        newSubmit.textContent = "SUBMIT";
+        newSubmit.setAttribute("href", "highscore.html")
+        quizEL.appendChild(newSubmit);
+    }
+
+    function highScore(){
+        var initials = inputEL.textContent; 
+        localStorage.setItem("initials", initials);
+        localStorage.setItem("score", counter);
+        
+    }
+    submitEl.addEventListener("click", changeQuestion);
+    submitEl.addEventListener("click", startTimer);
+
+    // newSubmit.addEventListener("click", highScore);

@@ -4,11 +4,26 @@
     right:  0;
     text-align: right;
 } */
+/* 
+input {
+    ;
+} */
+body {
+    background-color: pink;
+}
 
 #title {
     text-align: center;
 }
 
 #main {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+h1 {
     text-align: center;
 }
