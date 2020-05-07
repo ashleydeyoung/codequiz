@@ -8,7 +8,7 @@ var quizEL = document.getElementById("quiz");
 var formEL = document.getElementById("initials-form");
 var newSubmitEl = document.querySelector(".btn");
 
-var counter = 25;
+var counter = 75;
 
 var timeRemaining = 0;
 
@@ -107,7 +107,7 @@ function startTimer() {
     
     function storeStuff() {
         console.log("whatever")
-        var userInitials = document.getElementById("userInitials").value
+        var userInitials = document.getElementById("userInitials").value.trim()
         // console.log(userInitials);
 
         var scoreArray = localStorage.getItem("score")
