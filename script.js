@@ -4,13 +4,14 @@ var hTags = document.querySelector("h1");
 var mainEL = document.getElementById("main");
 var buttonArrayEl = document.getElementById("buttonArray");
 var quizEL = document.getElementById("quiz");
-var inputEL = document.createElement("input");
-var formEL = document.getElementById("form");
 
+var formEL = document.getElementById("initials-form");
+var newSubmitEl = document.querySelector(".btn");
 
 var counter = 25;
 
 var timeRemaining = 0;
+
 
 var questionCount = 0
 
@@ -63,7 +64,7 @@ function startTimer() {
         if (event.target.textContent === questionArray[questionCount].correct) {
             // console.log("correct");
             questionCount++;
-            counter += 5
+            
             
         } 
         else {
@@ -78,19 +79,16 @@ function startTimer() {
             
             if (questionCount === 0) {
                 submitEl.remove();
-            }
-            // if (questionCount === questionArray.length) {
-            
-            //     endQuiz();
-                
-            // }
+
+            } 
+         
     
-            mainEL.textContent = questionArray[questionCount].question;
+            
             buttonArrayEl.textContent = "";
-            for (let i = 0; i < questionArray[questionCount].answers.length; i++) {
+            for (var i = 0; i < questionArray[questionCount].answers.length; i++) {
                 var newButton = document.createElement("button");
                 newButton.textContent = questionArray[questionCount].answers[i];
-              
+                mainEL.textContent = questionArray[questionCount].question;
                 console.log(questionArray[questionCount].answers[i]);
                 buttonArrayEl.appendChild(newButton);
                 
@@ -104,33 +102,59 @@ function startTimer() {
        
     };
 
-  
+ 
 
+    
+    function storeStuff() {
+        console.log("whatever")
+        var userInitials = document.getElementById("userInitials").value
+        // console.log(userInitials);
+
+        var scoreArray = localStorage.getItem("score")
+
+        if (scoreArray === null) {
+            scoreArray= [];
+
+        }
+        else {
+            scoreArray = JSON.parse(scoreArray)
+        }
+        var userScore = {
+            initials : userInitials,
+            score: counter,
+        }
+        // console.log(typeof scoreArray)
+        scoreArray.push(userScore)
+        
+        localStorage.setItem("score", JSON.stringify(scoreArray))
+        location.replace('./highscore.html')
+
+    }
     function endQuiz() {
         
         hTags.textContent = "Quiz Over";
         mainEL.innerHTML = ("Your score: " + counter + " Please enter your initials below for high score");
         buttonArrayEl.style.display = "none";
         timerEL.textContent = "";
-        inputEL.textContent = " ";
+        
+        var inputEL = document.createElement("input");
+        inputEL.id = "userInitials"
         
         quizEL.appendChild(inputEL);
-        inputEL.setAttribute("type", "text")
-        inputEL.setAttribute("class", "form-control")
+        // inputEL.setAttribute("type", "text")
+        // inputEL.setAttribute("class", "form-control")
         var newSubmit = document.createElement("button");
         newSubmit.textContent = "SUBMIT";
-        newSubmit.setAttribute("onclick", "location.href = 'highscore.html';");
+        newSubmit.onclick = storeStuff;
+        // newSubmit.setAttribute("onclick", "location.href = 'highscore.html';");
         newSubmit.setAttribute("class", "btn btn-primary mb-2");
         quizEL.appendChild(newSubmit);
     }
 
-    function highScore(){
-        var initials = inputEL.textContent; 
-        localStorage.setItem("initials", initials);
-        localStorage.setItem("score", counter);
-        
-    }
+  
     submitEl.addEventListener("click", changeQuestion);
     submitEl.addEventListener("click", startTimer);
 
-    // newSubmit.addEventListener("click", highScore);
+
+  
+    

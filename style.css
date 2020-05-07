@@ -1,18 +1,9 @@
-/* .timer {
-    position: fixed;
-    top: 0;
-    right:  0;
-    text-align: right;
-} */
-/* 
-input {
-    ;
-} */
+
 body {
     background-color: pink;
 }
 
-article {
+form {
     visibility: hidden;
 }
 
@@ -30,4 +21,9 @@ h2 {
 
 h1 {
     text-align: center;
+}
+
+#submit {
+    background-color: lightblue;
+    margin: 0, 50%;
 }
